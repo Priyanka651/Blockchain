@@ -1,6 +1,8 @@
 ## Detailed Explanation
 
 **What is the Blockchain?**
+
+
 A blockchain is a distributed database that contains a list of records (data).
 Distributed means that instead of being stored on a central device somewhere, the entire database is actively synced and stored on a bunch of other devices.
 This is called a peer-to-peer network, much like how Napster was a peer-to-peer network for sharing music files.
