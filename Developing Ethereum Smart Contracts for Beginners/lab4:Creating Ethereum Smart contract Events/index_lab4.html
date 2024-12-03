@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="main_lab4.css" />
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Coursetro Instructor</h1>
+        <h2 id="instructor">
+            <!-- // ADDED -->
+            <img id="loader" src="Imgur.gif" />
+        </h2>
+        <label for="name" class="col-lg-2 control-label">Instructor Name</label>
+        <input id="name" type="text" />
+        <label for="name" class="col-lg-2 control-label">Instructor Age</label>
+        <input id="age" type="text" />
+        <button id="button">Update Instructor</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script>
+        const run = async () => {
+            var web3;
+
+            if (typeof web3 !== "undefined") {
+                web3 = new Web3(web3.currentProvider);
+            } else {
+                //////////////////////////////////////////////////////////////////
+                // CHANGED: Using Websocket Provider
+                web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8545"));
+                //////////////////////////////////////////////////////////////////
+            }
+
+            const accounts = await web3.eth.getAccounts();
+            web3.eth.defaultAccount = accounts[0];
+            console.log(web3.eth.defaultAccount);
+            console.log("Creating Coursetro");
+
+            //////////////////////////////////////////////////////////////////
+            // The highlighted area should be merged into one line
+            //////////////////////////////////////////////////////////////////
+            var Coursetro = new web3.eth.Contract(
+                [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fName",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "Instructor",
+		"type": "event"
+	}
+],
+                "0x67043947CA342Dc188171ce9a4C828A4EF7E97F2"
+            );
+
+            //////////////////////////////////////////////////////////////////
+            // CHANGED: using event listener
+            //////////////////////////////////////////////////////////////////
+            Coursetro.events
+                .Instructor()
+                .on("connected", function (subscriptionId) {
+                    console.log(subscriptionId);
+                })
+                .on("data", function (event, error) {
+                    console.log("Inside instructorEvent.on");
+                    console.log(event);
+                    $("#loader").hide();
+                    $("#instructor").html(
+                        event.returnValues.name +
+                        " (" +
+                        event.returnValues.age +
+                        " years old)"
+                    );
+                })
+                .on("error", function (error) {
+                    $("#loader").hide();
+                    console.error(error);
+                });
+
+            $("#button").click(function () {
+                console.log("Inside click");
+                // ADDED
+                $("#loader").show();
+                Coursetro.methods
+                    .setInstructor($("#name").val(), $("#age").val())
+                    .send({ from: "0x409BB479dA25c1642C1A2765500fF789920e3c88" });
+            });
+        };
+
+        run();
+    </script>
+</body>
+</html>
 
