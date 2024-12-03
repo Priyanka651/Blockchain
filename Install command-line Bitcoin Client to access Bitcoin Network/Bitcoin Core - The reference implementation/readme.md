@@ -25,9 +25,10 @@ cd bitcoin-0.15.1/bin
 
 ## Start Electrum with the ‘–testnet’ command to connect to the Testnet blockchain.  Below are commands that will install and start Electrum on Ubuntu.
 
+```bash
 sudo apt-get install python3-setuptools python3-pyqt5 python3-pip
 sudo pip3 install electrum
 electrum --testnet
-
+```
 
  
