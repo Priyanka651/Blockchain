@@ -11,17 +11,17 @@ Trading coins on the Testnet is exactly the same process as trading them on the 
 is recorded in the blockchain, blocks of transactions are mined, and the process repeats. 
 Testnet coins are used to generate transactions in the Testnet blockchain and are used both by beginners and developers who are testing new Bitcoin-based programs.
 
-From an Ubuntu machine: download Bitcoin Core and start with the following commands (check bitcoin.org for the latest version):
+## From an Ubuntu machine: download Bitcoin Core and start with the following commands (check bitcoin.org for the latest version):
 cd ~/Documents
- wget https://bitcoin.org/bin/bitcoin-core-0.15.1/bitcoin-0.15.1-x86_64-linux-gnu.tar.gz
+ wget 
 tar xfz bitcoin-0.15.1-x86_64-linux-gnu.tar.gz
 cd bitcoin-0.15.1/bin
 ./bitcoin-qt -testnet
 
 
-Start Electrum with the ‘–testnet’ command to connect to the Testnet blockchain.  Below are commands that will install and start Electrum on Ubuntu.
+## Start Electrum with the ‘–testnet’ command to connect to the Testnet blockchain.  Below are commands that will install and start Electrum on Ubuntu.
 sudo apt-get install python3-setuptools python3-pyqt5 python3-pip
- sudo pip3 install https://download.electrum.org/3.0.5/Electrum-3.0.5.tar.gz
+ sudo pip3 install 
  electrum --testnet
 
  
