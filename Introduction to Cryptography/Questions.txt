@@ -1,1 +1,8 @@
+Question (f):
 
+What is the key size for Caesar cipher whose legimate characters are
+
+abcdefghijklmnopqrstuvwxyz1234567890
+
+Question (g):
+How many symmetric keys are required for N people to communicate using Symmetric Key Cryptograph?
