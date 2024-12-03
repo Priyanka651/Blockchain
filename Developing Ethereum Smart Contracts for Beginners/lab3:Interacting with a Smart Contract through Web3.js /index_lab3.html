@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="main_lab3.css" />
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Coursetro Instructor</h1>
+        <h2 id="instructor"></h2>
+        <label for="name" class="col-lg-2 control-label">Instructor Name</label>
+        <input id="name" type="text" />
+        <label for="name" class="col-lg-2 control-label">Instructor Age</label>
+        <input id="age" type="text" />
+        <button id="button">Update Instructor</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script>
+        const run = async () => {
+            var web3;
+
+            if (typeof web3 !== "undefined") {
+                web3 = new Web3(web3.currentProvider);
+            } else {
+                // set the provider you want from Web3.providers
+                web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            }
+
+            const accounts = await web3.eth.getAccounts();
+            web3.eth.defaultAccount = accounts[0];
+
+            console.log(web3.eth.defaultAccount);
+            console.log("Creating Coursetro");
+
+            ////////////////////////////////////////////////////////////////
+            // The highlighted area should be merged into one line
+            ////////////////////////////////////////////////////////////////
+
+            // var Coursetro = new web3.eth.Contract(
+            // PASTE ABI CODE HERE,
+            // PASTE CONTRACT ADDRESS HERE
+            // );
+
+            var Coursetro = new web3.eth.Contract(
+                [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fName",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "age",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "fName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+],
+                "0x67043947CA342Dc188171ce9a4C828A4EF7E97F2"
+            );
+
+            Coursetro.methods.getInstructor().call(function (error, result) {
+                console.log("Inside Coursetro.getInstructor");
+                if (!error) {
+                    console.log("Inside !error");
+                    // result[0] is name, result[1] is age
+                    $("#instructor").html(result[0] + " (" + result[1] + " years old)");
+                    console.log(result);
+                } else {
+                    console.error(error);
+                }
+            });
+
+            // $("#button").click(function () {
+            //     console.log("Inside click");
+            //     Coursetro.methods
+            //         .setInstructor($("#name").val(), $("#age").val())
+            //         .send({from: "COPY YOUR ACCOUNT ADDRESS HERE"});
+            // });
+
+            $("#button").click(function () {
+                console.log("Inside click");
+                Coursetro.methods
+                    .setInstructor($("#name").val(), $("#age").val())
+                    .send({ from: "0x409BB479dA25c1642C1A2765500fF789920e3c88" });
+            });
+        };
+
+        run();
+    </script>
+</body>
+</html>
 
